@@ -1,28 +1,32 @@
 /*global chrome*/
+import React from "react";
+import "./App.css";
 
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-
-class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <header className="App-header">
-          {this.props.isExt ? 
-            <img src={chrome.runtime.getURL("static/media/logo.svg")} className="App-logo" alt="logo" />
-          :
-            <img src={logo} className="App-logo" alt="logo" />
-          }
-
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.js</code> and save to reload.
+function App() {
+  return (
+    <div className="root">
+      <section className="container">
+        <div className="text-white text-lg lg:text-3xl pt-10">
+          <div className="header-title">
+            <h1>
+              <span className="text-blue-500">LinkGen </span> <br /> message
+              generator
+            </h1>
+          </div>
+          <div className="header-subtitle font-thin tracking-widest pt-5 text-center">
+            <h2>Networking Made Easier.</h2>
+          </div>
+        </div>
+        <p className="text-gray-300 text-center">
+          This tool uses A.I. (GPT-3) to generate personalized LinkedIn
+          messages. It is designed to help you quickly and easily craft
+          professional, effective messages to your connections.
         </p>
-      </div>
-    );
-  }
+      </section>
+
+      <div className="badge-container grow"></div>
+    </div>
+  );
 }
 
 export default App;
