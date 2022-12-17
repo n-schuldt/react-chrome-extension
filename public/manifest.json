@@ -1,25 +1,20 @@
 {
-  "short_name": "LinkedGen",
-  "name": "Linkedin Message Generator",
+  "short_name": "LinkGen",
+  "name": "LinkGen",
   "version": "1.1",
-  "manifest_version": 3,
+  "manifest_version": 2,
   "background": {
-    "scripts": ["app/background.js"],
-    "persistent": false
+    "scripts": ["app/background.js"]
   },
-  "browser_action": {
-    "default_icon": "icon.png",
-    "default_title": "Linked Gem"
-  },
-  "content_scripts": [
+  "browser_action": {},
+  "content_scripts" : [
     {
-      "matches": [ "https://www.linkedin.com/in/*", "http://www.linkedin.com/in/*" ],
-      "css": ["/css/root.css"],
-      "js": ["/static/js/content.js"]
+      "matches": [ "<all_urls>" ],
+      "css": ["css/root.css"],
+      "js": ["static/js/content.js"]
     }
   ],
-  "permissions": ["https://www.linkedin.com/*"],
-  "web_accessible_resources": [
+  "web_accessible_resources":[
     "/static/css/content.css", "/static/media/*"
   ],
   "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
