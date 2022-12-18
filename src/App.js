@@ -2,7 +2,9 @@
 import React from "react";
 import "./App.css";
 
-function App() {
+function App(props) {
+  const [nameText, bannerText] = props.elements;
+  console.log("APP", nameText, bannerText);
   return (
     <div className="root">
       <section className="container">
@@ -22,6 +24,9 @@ function App() {
           messages. It is designed to help you quickly and easily craft
           professional, effective messages to your connections.
         </p>
+      </section>
+      <section className="container">
+        <p>{nameText}</p>
       </section>
 
       <div className="badge-container grow"></div>

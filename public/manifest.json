@@ -9,7 +9,7 @@
   "browser_action": {},
   "content_scripts" : [
     {
-      "matches": [ "<all_urls>" ],
+      "matches": [ "https://www.linkedin.com/in/**" ],
       "css": ["css/root.css"],
       "js": ["static/js/content.js"]
     }
