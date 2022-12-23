@@ -1,23 +1,52 @@
 /*global chrome*/
 /* src/content.js */
-import React from "react";
+import React, { useEffect, useState } from "react";
 import ReactDOM from "react-dom";
 import Frame, { FrameContextConsumer } from "react-frame-component";
+import axios from "axios";
 import App from "./App";
 
+//call cloud function https://gpt3-generate-rm6o2vwn2q-uc.a.run.app usign axios
+
+// const generateMessage = async (prompt) => {
+//   const response = axios
+//     .get("https://gpt3-generate-rm6o2vwn2q-uc.a.run.app")
+//     .then((response) => {
+//       console.log("R1", response);
+//     })
+//     .catch((error) => {
+//       console.log(error);
+//     });
+//   console.log("RES", response.data?.text);
+//   return response.data?.text;
+// };
+
+const generateMessage = async (prompt) => {
+  const response = await axios.get(
+    "https://gpt3-generate-rm6o2vwn2q-uc.a.run.app"
+  );
+  console.log("RES", response.data?.text);
+  return response.data?.text;
+};
+
 const Main = () => {
-  // select name
-  const name = document.getElementsByTagName("h1")[0];
+  const [name, setName] = useState(document.getElementsByTagName("h1")[0]);
+  const [banner, setBanner] = useState(
+    document.getElementsByClassName("text-body-medium break-words")[0]
+  );
+
+  // useEffect(() => {
+  //   setName(document.getElementsByTagName("h1")[0]);
+  //   setBanner(
+  //     document.getElementsByClassName("text-body-medium break-words")[0]
+  //   );
+  //   console.log("DOM CHANGES", name, banner);
+  // }, []);
   name.style["backgroundColor"] = "#FF00FF";
-  const nameText = name.innerText;
-
-  //select banner
-  const banner = document.getElementsByClassName(
-    "text-body-medium break-words"
-  )[0];
+  const message = generateMessage();
+  console.log("Message", message.data);
+  // document.getElementById("prompt-output").innerText = text;
   banner.style["backgroundColor"] = "#0A00FF";
-  const bannerText = banner.innerText;
-
   return (
     <Frame
       head={[
@@ -35,7 +64,8 @@ const Main = () => {
               document={document}
               window={window}
               isExt={true}
-              elements={[nameText, bannerText]}
+              elements={[name, banner]}
+              generateMessage={generateMessage}
             />
           );
         }}
