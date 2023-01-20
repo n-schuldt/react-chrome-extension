@@ -10,6 +10,7 @@
     "css-loader": "^3.6.0",
     "dotenv": "^8.2.0",
     "dotenv-expand": "^5.1.0",
+    "formik": "^2.2.9",
     "fs-extra": "^9.0.1",
     "postcss-flexbugs-fixes": "^4.2.1",
     "promise": "8.0.1",
@@ -19,7 +20,8 @@
     "react-dom": "^16.13.1",
     "react-frame-component": "^4.1.2",
     "resolve": "^1.17.0",
-    "whatwg-fetch": "3.2.0"
+    "whatwg-fetch": "3.2.0",
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "node scripts/start.js",
@@ -106,7 +108,7 @@
     "html-webpack-plugin": "^4.3.0",
     "jest": "^26.1.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^8.0.0",
     "npm-watch": "^0.6.0",
     "postcss-loader": "^3.0.0",
     "react-dev-utils": "^10.2.1",
