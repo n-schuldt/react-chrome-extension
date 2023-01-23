@@ -1,22 +1,25 @@
 {
-  "short_name": "LinkGen",
   "name": "LinkGen",
-  "version": "1.1",
-  "manifest_version": 2,
+  "short_name": "LinkGen",
+  "version": "0.0.0.1",
+  "description": "LinkGen is a chrome extension that helps you generate messages automatically when visiting profiles, using AI.",
+  "manifest_version": 3,
   "background": {
-    "scripts": ["app/background.js"]
+    "service_worker": "app/background.js"
   },
-  "browser_action": {},
-  "content_scripts" : [
+  "action": {},
+  "content_scripts": [
     {
-      "matches": [ "https://www.linkedin.com/in/**" ],
-      "css": ["css/root.css"],
-      "js": ["static/js/content.js"]
+      "matches": ["<all_urls>"],
+      "css": ["/css/root.css"],
+      "js": ["/static/js/content.js"]
     }
   ],
-  "web_accessible_resources":[
-    "/static/css/content.css", "/static/media/*"
+  "web_accessible_resources": [
+    {
+      "resources": ["/static/css/content.css", "/static/media/*"],
+      "matches": ["<all_urls>"]
+    }
   ],
-  "permissions": ["storage"],
-  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'"
+  "permissions": ["storage", "identity"]
 }

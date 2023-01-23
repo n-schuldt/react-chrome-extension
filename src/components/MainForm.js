@@ -102,7 +102,7 @@ function MainForm(props) {
                 className="block bg-gray-800 text-gray-200 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-gray-700"
               />
               <div className="text-blue-500 text-xs italic">
-                {errors.additional}
+                {errors.maxChars}
               </div>
             </div>
 
