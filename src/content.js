@@ -16,9 +16,6 @@ const Main = () => {
   // call cloud function https://gpt3-generate-rm6o2vwn2q-uc.a.run.app usign fetch
   const generateMessage = async (mainFormValues, profileInfo, pageElements) => {
     console.log("CALLING CLOUD FUNCTION");
-    console.log("mainFormValues", mainFormValues);
-    console.log("info", profileInfo);
-    console.log("pageElements", pageElements);
 
     const mainObj = {
       name: pageElements.name.innerText,
@@ -26,15 +23,6 @@ const Main = () => {
       ...mainFormValues,
       ...profileInfo,
     };
-    console.log("mainObj", mainObj);
-
-    // set sample data
-    // setData({
-    //   text: `Hey Nicolas, I'm a bot and I'm here to help you. I'm going to generate a message for you based on the information you provided. I'm going to use the following information.
-
-    // `,
-    // });
-    // return { text: "Text returned from cloud function" };
     try {
       setIsGenerating(true);
       // set headers to content type json
@@ -58,9 +46,27 @@ const Main = () => {
     }
   };
 
-  name.style["backgroundColor"] = "#FF00FF";
+  // blue checkmark icon besides the baner and name
+  const checkIcon = document.createElement("span");
+  checkIcon.className = "ml-1 text-blue-500 flex items-center justify-center";
+  checkIcon.innerHTML = `<svg class="max-w-4 max-h-4" fill="none" stroke="#9729ff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="height: 2rem;"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>`;
 
-  banner.style["backgroundColor"] = "#0A00FF";
+  // check if name is already set
+  if (name) {
+    // check if check icon is already set
+    if (!name.querySelector(".ml-1")) {
+      name.appendChild(checkIcon);
+    }
+  }
+
+  // check if banner is already set
+  if (banner) {
+    // check if check icon is already set
+    if (!banner.querySelector(".ml-1")) {
+      banner.appendChild(checkIcon);
+    }
+  }
+
   return (
     <Frame
       head={[

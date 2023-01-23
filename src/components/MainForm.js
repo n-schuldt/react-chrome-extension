@@ -9,7 +9,6 @@ const PromptSchema = Yup.object().shape({
 
 function MainForm(props) {
   const { info, generateMessage, pageElements, isGenerating } = props;
-  console.log("INFO other mainform", info.other);
   return (
     <>
       <Formik
@@ -21,7 +20,7 @@ function MainForm(props) {
         }}
         validationSchema={PromptSchema}
         onSubmit={async (values) => {
-          console.log("SUBMITTING");
+          console.log("Submitted");
           if (values.template === "main") {
             values.template = info.other || "connect";
           }

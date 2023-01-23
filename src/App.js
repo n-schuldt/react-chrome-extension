@@ -12,13 +12,8 @@ function App(props) {
   const { generateMessage, data, isGenerating } = props;
 
   useEffect(() => {
-    console.log("Info", showInfo);
-  }, [showInfo]);
-
-  useEffect(() => {
     checkForKey().then((response) => {
       if (response) {
-        console.log("Check");
         setShowInfo(false);
         setInfo(response);
         document.getElementById("info_needed").style.display = "none";
@@ -31,7 +26,9 @@ function App(props) {
     // Save to google storage
     chrome.storage.local.set({ message_info: input }, () => {
       console.log("Info saved successfully");
-      console.log("input", input);
+      if (chrome.runtime.error) {
+        console.log("Runtime error.");
+      }
       setInfo(input);
       setShowInfo(false);
       document.getElementById("info_needed").style.display = "none";
@@ -40,7 +37,7 @@ function App(props) {
   };
 
   const changeInfo = () => {
-    console.log("info changed");
+    console.log("Info Changed");
     setShowInfo(true);
     document.getElementById("info_needed").style.display = "block";
     document.getElementById("info_entered").style.display = "none";
