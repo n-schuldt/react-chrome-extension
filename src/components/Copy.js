@@ -33,9 +33,9 @@ function Copy({ copyText }) {
     <div className="px-3 py-1">
       <button
         onClick={handleCopyClick}
-        className="bg-blue-400 rounded-full px-5 py-2 text-black hover:bg-blue-300"
+        className="px-5 py-1 appearance-none border-none generate-button"
       >
-        <span>{isCopied ? "Copied!" : "Copy"}</span>
+        <p className="poppins">{isCopied ? "Copied!" : "Copy"}</p>
       </button>
     </div>
   );

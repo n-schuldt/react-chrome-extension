@@ -5,75 +5,61 @@ import ReactDOM from "react-dom";
 import Frame, { FrameContextConsumer } from "react-frame-component";
 import App from "./App";
 
-// call cloud function https://gpt3-generate-rm6o2vwn2q-uc.a.run.app usign fetch
-
-//detect DOM changes
-
-const obsConfig = { attributes: true, childList: true, characterData: true };
-
 const Main = () => {
+  const [isGenerating, setIsGenerating] = useState(false);
   const [name, setName] = useState(document.getElementsByTagName("h1")[0]);
   const [banner, setBanner] = useState(
     document.getElementsByClassName("text-body-medium break-words")[0]
   );
   const [data, setData] = useState({});
 
-  const generateMessage = async (name, banner) => {
+  // call cloud function https://gpt3-generate-rm6o2vwn2q-uc.a.run.app usign fetch
+  const generateMessage = async (mainFormValues, profileInfo, pageElements) => {
     console.log("CALLING CLOUD FUNCTION");
-    setData({ text: "Text returned from cloud function" });
-    return { text: "Text returned from cloud function" };
-    // try {
-    //   // set headers to content type json
-    //   const response = await fetch(
-    //     "https://gpt3-generate-rm6o2vwn2q-uc.a.run.app", // cloud function url
-    //     { method: "POST", body: JSON.stringify({ name, banner }) }
-    //   );
+    console.log("mainFormValues", mainFormValues);
+    console.log("info", profileInfo);
+    console.log("pageElements", pageElements);
 
-    //   const text = await response.json();
+    const mainObj = {
+      name: pageElements.name.innerText,
+      banner: pageElements.banner.innerText,
+      ...mainFormValues,
+      ...profileInfo,
+    };
+    console.log("mainObj", mainObj);
 
-    //   if (!text) {
-    //     throw new Error("No text returned");
-    //   }
-    //   setData(text);
-    //   return text;
-    // } catch (err) {
-    //   console.error("Error generating message", err);
-    //   throw new Error("Error generating message");
-    // }
+    // set sample data
+    // setData({
+    //   text: `Hey Nicolas, I'm a bot and I'm here to help you. I'm going to generate a message for you based on the information you provided. I'm going to use the following information.
+
+    // `,
+    // });
+    // return { text: "Text returned from cloud function" };
+    try {
+      setIsGenerating(true);
+      // set headers to content type json
+      const response = await fetch(
+        "https://gpt3-generate-rm6o2vwn2q-uc.a.run.app", // cloud function url
+        { method: "POST", body: JSON.stringify({ data: mainObj }) }
+      );
+
+      const text = await response.json();
+
+      if (!text) {
+        throw new Error("No text returned");
+      }
+      setData(text);
+      setIsGenerating(false);
+      return text;
+    } catch (err) {
+      setIsGenerating(false);
+      console.error("Error generating message", err);
+      throw new Error("Error generating message");
+    }
   };
-
-  // const experience = document.getElementsByClassName(
-  //   "artdeco-card ember-view relative break-words pb3 mt2"
-  // );
-  // // experience.style["backgroundColor"] = "#FF0000";
-  // for (let i = 0; i < experience.length; i++) {
-  //   console.log("Experience", experience[i]);
-  //   experience[i].style["backgroundColor"] = "#FF0000";
-  // }
-
-  // console.log("Experience", experience);
-  // const observer = new MutationObserver((mutations) => {
-  //   mutations.forEach((mutation) => {
-  //     //check if the h1 element has changed
-  //     if (mutation.target.tagName === "H1") {
-  //       console.log("H1 changed");
-  //       //update the state
-  //       setName(mutation.target);
-  //     }
-  //     //check if the banner element has changed
-  //     if (mutation.target.className === "text-body-medium break-words") {
-  //       console.log("Banner changed");
-  //       //update the state
-  //       setBanner(mutation.target);
-  //     }
-  //   });
-  // });
-
-  // observer.observe(document.body, obsConfig);
 
   name.style["backgroundColor"] = "#FF00FF";
 
-  // document.getElementById("prompt-output").innerText = text;
   banner.style["backgroundColor"] = "#0A00FF";
   return (
     <Frame
@@ -92,9 +78,13 @@ const Main = () => {
               document={document}
               window={window}
               isExt={true}
-              elements={[name, banner]}
+              elements={{
+                name: name,
+                banner: banner,
+              }}
               data={data}
               generateMessage={generateMessage}
+              isGenerating={isGenerating}
             />
           );
         }}

@@ -3,10 +3,13 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import MainForm from "./components/MainForm";
 import PromptForm from "./components/PromptForm";
+import Copy from "./components/Copy";
 
 function App(props) {
   const [showInfo, setShowInfo] = useState(true);
   const [info, setInfo] = useState({});
+  const { name, banner } = props.elements;
+  const { generateMessage, data, isGenerating } = props;
 
   useEffect(() => {
     console.log("Info", showInfo);
@@ -51,36 +54,28 @@ function App(props) {
     });
   };
 
-  const [name, banner] = props.elements;
-  const { generateMessage, data } = props;
   return (
     <div className="root">
-      <section className="container">
+      <section className="p-3 w-100 title-container shadow-lg">
         <div className="text-lg lg:text-3xl pt-10">
           <div className="header-title">
             <h1>
-              <span className="text-blue-500">LinkGen </span> <br /> message
-              generator
+              Link<span className="text-blue-300">Gen</span>
             </h1>
           </div>
-          {/* <div className="header-subtitle font-thin tracking-widest pt-5 text-center">
-            <h2>Networking Made Easier.</h2>
-          </div> */}
         </div>
-        {/* <p className="text-gray-300 text-center">
-          This tool uses A.I. (GPT-3) to generate personalized LinkedIn
-          messages. It is designed to help you quickly and easily craft
-          professional, effective messages to your connections.
-        </p> */}
       </section>
-      {/* button to log the info */}
-      <button
-        onClick={() => {
-          checkForKey().then((res) => console.log("RES", res));
-        }}
-      >
-        Log Info
-      </button>
+
+      <section className="container">
+        <div className="text-center bg-blue-300 font-light rounded-md px-5">
+          <p>
+            You are on <span className="font-bold">{name.innerText}</span>'s
+            profile
+          </p>
+        </div>
+      </section>
+
+      {/* divider */}
 
       <section className="container">
         {showInfo ? (
@@ -89,10 +84,12 @@ function App(props) {
           </div>
         ) : (
           <>
-            <div>
-              <p>You entered your information.</p>
+            <div className="flex items-center">
+              <p className="px-2 font-thin text-xs">
+                You entered your information
+              </p>
               <button
-                id="change_info_button"
+                className="border-blue-400 text-blue-500 bg-none hover:text-white poppins border-solid cursor-pointer hover:bg-blue-400 py-2 px-4 rounded-full border-2"
                 onClick={() => {
                   changeInfo();
                 }}
@@ -100,26 +97,44 @@ function App(props) {
                 Change Info
               </button>
             </div>
-            <MainForm info={info} />
+            <div className="divider"></div>
+            <MainForm
+              info={info}
+              generateMessage={generateMessage}
+              pageElements={props.elements}
+              isGenerating={isGenerating}
+            />
           </>
         )}
       </section>
-      <section className="container">
-        <p>You are on {name.innerText}'s profile</p>
-        {/* Button that calls an https cloud function and displays the ouptut in a paragraph, no CORS */}
-        <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full border-0"
-          onClick={() => {
-            console.log("CLICKED");
-            generateMessage(name.innerText, banner.innerText).then((res) =>
-              console.log("RES", res)
-            );
-          }}
-        >
-          Generate Message
-        </button>
-        <p id="prompt-output">{data?.text}</p>
-      </section>
+      {data?.text && (
+        <section className="container bg-gray-200 py-2">
+          <div className="output ">
+            <div className="output-header-container font-bold text-3xl ">
+              <div className="output-header pb-3">
+                <h3 className="">Output</h3>
+              </div>
+            </div>
+            <div className="   mx-3 opacity-70">
+              <div className="pt-5 align-center p-4 shadow-lg rounded-md bg-blue-200">
+                <p className="whitespace-pre-wrap text-sm">
+                  {data?.text.trim()}
+                </p>
+              </div>
+              <div className="flex justify-between w-full pb-3 px-3 pt-2">
+                <p class="text-gray-600 text-xs italic self-start">
+                  Not what you were expecting? Try again and change the wording
+                  a bit! <br /> The same imput can lead to very different
+                  outputs.
+                </p>
+                <div className="">
+                  <Copy copyText={data?.text.trim()} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+      )}
 
       <div className="badge-container grow"></div>
     </div>
