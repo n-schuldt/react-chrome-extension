@@ -1,11 +1,17 @@
 {
   "name": "LinkGen",
   "short_name": "LinkGen",
-  "version": "0.0.0.2",
+  "version": "0.0.0.3",
   "description": "LinkGen is a chrome extension that helps you generate messages automatically when visiting profiles, using AI.",
   "manifest_version": 3,
   "background": {
     "service_worker": "app/background.js"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
   },
   "action": {},
   "content_scripts": [
